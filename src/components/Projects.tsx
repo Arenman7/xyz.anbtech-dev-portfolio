@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, Code, BarChart } from 'lucide-react';
+import { Globe, Gamepad, BarChart } from 'lucide-react';
 import ExpandedProject from './ExpandedProject';
 import { BentoBox } from './BentoBox';
 
@@ -18,6 +18,8 @@ const getTagGradient = (tech: string) => {
     'D3.js': 'from-orange-400 to-orange-600',
     TypeScript: 'from-blue-500 to-blue-700',
     'Material-UI': 'from-indigo-400 to-indigo-600',
+    Unity: 'from-green-400 to-green-600',
+    'C#': 'from-red-400 to-red-600',
   };
   return gradients[tech] || 'from-gray-400 to-gray-600';
 };
@@ -31,51 +33,41 @@ const Projects: React.FC = () => {
   // Updated projects array with images
   const projects = [
     {
-      title: 'E-commerce Platform',
-      description:
-        'A full-stack e-commerce solution built with React and Node.js',
+      title: 'This Website!',
+      description: 'This website is a portfolio of my projects and skills.',
       longDescription:
-        'This e-commerce platform provides a seamless shopping experience with features like user authentication, product catalog, shopping cart, and secure checkout process. The frontend is built with React for a responsive UI, while the backend uses Node.js and Express for robust API endpoints. MongoDB is used for efficient data storage and retrieval.',
+        'This website is a portfolio of my projects and skills. It is built with React and Tailwind CSS.',
       icon: <Globe size={48} />,
       date: 'Aug 15, 2023',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-      link: 'https://ecommerce-platform-demo.netlify.app',
-      images: [
-        'https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80',
-        'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      ],
+      technologies: ['React', 'TypeScript', 'Tailwind CSS'],
+      link: 'https://anbtech.xyz',
+      githubLink: 'https://github.com/Arenman7/xyz.anbtech-dev-portfolio',
+      image:
+        'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExajRqYTF2NTI5bjRqMnhqYmlwejEwMG9vMXZsNGFqMWludjcxaTUzYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2Te2fOrHDINrKY7i51/giphy.gif',
     },
     {
-      title: 'Task Management App',
-      description:
-        'A productivity app with real-time updates using Vue and Firebase',
+      title: 'SixShooter',
+      description: 'Doom-like game built with Unity',
       longDescription:
-        'This task management application helps users organize their work efficiently. It features real-time updates, allowing for collaborative task management. The app is built with Vue.js for a reactive frontend, Vuex for state management, and Firebase for backend services including authentication and real-time database.',
-      icon: <Code size={48} />,
-      date: 'Oct 3, 2023',
-      technologies: ['Vue.js', 'Firebase', 'Vuex', 'Tailwind CSS'],
-      link: 'https://github.com/yourusername/task-management-app',
-      images: [
-        'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
-        'https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80',
-        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      ],
+        'SixShooter was a doom-like game built with Unity, for one of my object oriented programming classes, built in a couple weeks.',
+      icon: <Gamepad size={48} />,
+      date: 'May 3, 2023',
+      technologies: ['Unity', 'C#'],
+      link: 'https://arenman.itch.io/six-shooter',
+      githubLink: 'https://github.com/Arenman7/SixShooter',
+      image: 'https://i.imgur.com/gqXAeIs.jpeg',
     },
     {
-      title: 'Data Visualization Dashboard',
-      description: 'An interactive dashboard built with D3.js and React',
+      title: 'Netflix-Clone',
+      description: 'Netflix clone built with React and Firebase',
       longDescription:
-        'This data visualization dashboard presents complex datasets in an intuitive, interactive format. Built with React and D3.js, it offers various chart types and filtering options. The use of TypeScript ensures type safety, while Material-UI provides a sleek, responsive design.',
+        'Very basic partial netflix clone with firebase authentication and tmdb api usage',
       icon: <BarChart size={48} />,
       date: 'Dec 20, 2023',
-      technologies: ['React', 'D3.js', 'TypeScript', 'Material-UI'],
-      link: 'https://github.com/yourusername/data-viz-dashboard',
-      images: [
-        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-        'https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80',
-      ],
+      technologies: ['React', 'Firebase', 'TMDB API'],
+      link: '',
+      githubLink: 'https://github.com/Arenman7/netflix-clone',
+      image: '',
     },
   ];
 
@@ -225,6 +217,7 @@ const Projects: React.FC = () => {
           <ExpandedProject
             project={projects[selectedProject]}
             onClose={() => setSelectedProject(null)}
+            githubLink={projects[selectedProject].githubLink}
           />
         )}
       </AnimatePresence>

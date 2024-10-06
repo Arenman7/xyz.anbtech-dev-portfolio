@@ -8,15 +8,17 @@ interface ExpandedProjectProps {
     longDescription: string;
     technologies: string[];
     date: string;
-    link: string;
-    images: string[];
+    link?: string; // Make this optional
+    image?: string;
   };
   onClose: () => void;
+  githubLink: string;
 }
 
 const ExpandedProject: React.FC<ExpandedProjectProps> = ({
   project,
   onClose,
+  githubLink,
 }) => {
   useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
@@ -54,10 +56,12 @@ const ExpandedProject: React.FC<ExpandedProjectProps> = ({
           >
             <X size={24} />
           </button>
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-10"
-            style={{ backgroundImage: `url(${project.images[0]})` }}
-          ></div>
+          {project.image && (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-10"
+              style={{ backgroundImage: `url(${project.image})` }}
+            ></div>
+          )}
           <div className="relative z-10">
             <h3 className="text-2xl font-bold mb-4">{project.title}</h3>
             <p className="text-gray-300 mb-6">{project.longDescription}</p>
@@ -78,19 +82,19 @@ const ExpandedProject: React.FC<ExpandedProjectProps> = ({
               Completed on: {project.date}
             </p>
             <div className="flex space-x-4">
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                >
+                  <ExternalLink size={18} className="mr-2" />
+                  View Live
+                </a>
+              )}
               <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-              >
-                <ExternalLink size={18} className="mr-2" />
-                View Live
-              </a>
-              <a
-                href={`https://github.com/yourusername/${project.title
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')}`}
+                href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors"
