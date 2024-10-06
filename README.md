@@ -73,13 +73,9 @@ For inquiries about opportunities or collaborations:
 ---
 
 <p align="center">
-  <span style="display: flex; justify-content: center; align-items: center;">
-    <span>Developed by ArenB</span>
-    <span style="font-size: 0.8em; color: #999999; margin-left: 10px;">Look at this cute horse: 🐴</span>
-  </span>
-</p>
-
-<p align="center">
-  Developed by ArenB<br>
-  <span style="font-size: 0.8em; color: #999999;">Look at this cute horse: 🐴</span>
+  Developed by ArenB
+  <br>
+  <br>
+  <br>
+  <span>Look at this cute horse: 🐴</span>
 </p>
