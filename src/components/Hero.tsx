@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
     setTimeout(() => {
       setIsClicked(false);
       window.location.href = 'mailto:aren@anbtech.xyz';
-    }, 500);
+    }, 1000);
   }, []);
 
   // Toggle pause/resume for starfield animation
