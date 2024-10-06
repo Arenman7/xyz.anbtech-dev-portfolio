@@ -38,7 +38,7 @@ const Projects: React.FC = () => {
       longDescription:
         'This website is a portfolio of my projects and skills. It is built with React and Tailwind CSS.',
       icon: <Globe size={48} />,
-      date: 'Aug 15, 2023',
+      date: 'Oct 6, 2024',
       technologies: ['React', 'TypeScript', 'Tailwind CSS'],
       link: 'https://anbtech.xyz',
       githubLink: 'https://github.com/Arenman7/xyz.anbtech-dev-portfolio',
@@ -63,7 +63,7 @@ const Projects: React.FC = () => {
       longDescription:
         'Very basic partial netflix clone with firebase authentication and tmdb api usage',
       icon: <BarChart size={48} />,
-      date: 'Dec 20, 2023',
+      date: 'Sep 16, 2024',
       technologies: ['React', 'Firebase', 'TMDB API'],
       link: '',
       githubLink: 'https://github.com/Arenman7/netflix-clone',
