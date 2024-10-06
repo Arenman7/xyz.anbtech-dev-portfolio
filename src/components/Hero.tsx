@@ -38,6 +38,9 @@ const Hero: React.FC = () => {
     <div className="min-h-screen relative overflow-hidden">
       <StarField isHyperdrive={isHyperdrive || isClicked} isPaused={isPaused} />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black to-transparent opacity-50 z-10"></div>
+      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 opacity-50 sm:hidden text-center">
+        Psst...View this page on a computer, it's way cooler.
+      </div>
       <button
         className="absolute top-4 right-4 p-3 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-colors duration-300 z-30 border-2 border-white"
         onClick={togglePause}
