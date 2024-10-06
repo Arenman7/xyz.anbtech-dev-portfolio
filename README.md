@@ -1,14 +1,14 @@
-# ArenB's Developer Portfolio 👨‍💻
+# ArenB's Developer Portfolio
 
 Welcome to my portfolio. I'm Aren, a developer focused on creating efficient and engaging digital experiences. This portfolio showcases my skills, projects, and the technologies I've worked with. 🚀
 
 ![Centerpiece](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3h1NmxjczRyb2IycTU4eng1NHV1M3RweHd5M2xia2t4dzE0a2J5YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2Te2fOrHDINrKY7i51/giphy.gif)
 
-## Project Overview 🌟
+## Project Overview
 
 This portfolio is designed to provide an interactive and informative view of my work and capabilities. It combines functionality with a visually appealing interface to effectively present my professional profile.
 
-## Features ✨
+## Features
 
 - Interactive background with animation effects
 - Detailed skill presentation
@@ -38,7 +38,7 @@ To run this portfolio locally:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/arenman7/xyz.anbtech-dev-portfolio
+   git clone https://github.com/Arenman7/xyz.anbtech-dev-portfolio.git
    ```
 
 2. Navigate to the project directory:
@@ -66,7 +66,6 @@ For inquiries about opportunities or collaborations:
 ## Acknowledgements 🙏
 
 - Starfield animation concept from [Panic's Nova](https://nova.app/)
-- Icons by [Lucide](https://lucide.dev/)
 - [Bolt](https://bolt.new/) - Initial Concepting
 - [Cursor](https://cursor.com/) - My AI friend 😊
 
