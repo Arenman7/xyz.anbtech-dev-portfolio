@@ -44,7 +44,7 @@ To run this portfolio locally:
 2. Navigate to the project directory:
 
    ```bash
-   cd
+   cd xyz.anbtech-dev-portfolio
    ```
 
 3. Install dependencies and run the development server:
