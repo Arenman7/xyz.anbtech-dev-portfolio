@@ -74,5 +74,5 @@ For inquiries about opportunities or collaborations:
 
 <p align="center">
   Developed by ArenB<br>
-  <span style="opacity: 0.8;">Look at this cute horse: <small>🐴</small></span>
+  <span style="font-size: 0.8em; color: #999999;">Look at this cute horse: 🐴</span>
 </p>
