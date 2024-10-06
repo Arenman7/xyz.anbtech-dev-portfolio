@@ -209,7 +209,7 @@ const Projects: React.FC = () => {
         </motion.div>
         <div className="mt-16 text-center">
           <motion.a
-            href="https://github.com/yourusername"
+            href="https://github.com/arenman7"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-8 py-4 bg-black text-white font-bold rounded-full border border-white hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
