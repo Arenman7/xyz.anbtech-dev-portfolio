@@ -1,0 +1,166 @@
+@font-face {
+  font-family: 'Calibre';
+  src: url('/fonts/Calibre-Regular.woff2') format('woff2'),
+       url('/fonts/Calibre-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Calibre';
+  src: url('/fonts/Calibre-Bold.woff2') format('woff2'),
+       url('/fonts/Calibre-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-white font-sans;
+    font-family: 'Calibre', sans-serif;
+  }
+}
+
+@layer components {
+  .bento-box {
+    @apply grid gap-4 p-4;
+  }
+
+  .card {
+    @apply bg-opacity-30 backdrop-blur-md rounded-xl p-6 transition-all duration-300 transform-gpu;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3), 0 0 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  .button {
+    @apply px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-opacity-90 transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(
+      45deg,
+      #3a7bd5,
+      #00d2ff,
+      #3a7bd5,
+      #00d2ff,
+      #3a7bd5
+    );
+    background-size: 400% 100%;
+    background-position: 0% 0%;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: holographic 18s linear infinite;
+    animation-play-state: running;
+  }
+
+  .animate-bounce-fast {
+    animation: bounce 0.6s infinite;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+
+.button-icon {
+  @apply p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-colors duration-300;
+}
+
+.glow {
+  box-shadow: 0 0 30px rgba(100, 149, 237, 0.3);
+}
+
+.hover\:glow:hover {
+  box-shadow: 0 0 50px rgba(100, 149, 237, 0.5);
+}
+
+.holographic-text {
+  background-image: linear-gradient(
+    45deg,
+    #3a7bd5,
+    #00d2ff,
+    #3a7bd5,
+    #00d2ff,
+    #3a7bd5
+  );
+  background-size: 400% 100%;
+  background-position: 0% 0%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: holographic var(--holographic-duration, 8s) linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes holographic {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 400% 0%;
+  }
+}
+
+.animate-click {
+  animation: click 0.3s ease-out;
+}
+
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.space-button {
+  background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+  box-shadow: 0 0 10px rgba(0, 100, 255, 0.3), 0 0 20px rgba(0, 100, 255, 0.2);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.space-button:hover {
+  background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+  box-shadow: 0 0 15px rgba(0, 100, 255, 0.5), 0 0 30px rgba(0, 100, 255, 0.3);
+}
+
+.cool-tooltip {
+  background: linear-gradient(45deg, #2980b9, #2c3e50);
+  border: 1px solid #3498db;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.05);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+}
