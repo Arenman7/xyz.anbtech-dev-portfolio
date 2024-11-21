@@ -12,10 +12,10 @@ const Hero: React.FC = () => {
   const holographicDuration = isHyperdrive ? '2s' : '8s';
 
   // Smooth scroll to the skills section
-  const handleScrollToSkills = () => {
-    const skillsSection = document.getElementById('skills');
-    if (skillsSection) {
-      skillsSection.scrollIntoView({ behavior: 'smooth' });
+  const handleScrollToApps = () => {
+    const appsSection = document.getElementById('apps');
+    if (appsSection) {
+      appsSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          onClick={handleScrollToSkills}
+          onClick={handleScrollToApps}
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
