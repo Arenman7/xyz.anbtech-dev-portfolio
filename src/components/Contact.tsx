@@ -69,7 +69,15 @@ const Contact: React.FC = () => {
       </motion.div>
       {/* Additional contact information */}
       <p className="text-center mt-8 sm:mt-12 text-gray-400 text-xs sm:text-sm">
-        Based in Las Vegas, NV • Available for remote work worldwide
+        Based in Las Vegas, NV • Available for remote work worldwide •{' '}
+        <a 
+          href="https://buymeacoffee.com/ArenB" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:text-blue-400 transition-colors duration-300"
+        >
+          Buy me a coffee
+        </a>
       </p>
     </section>
   );

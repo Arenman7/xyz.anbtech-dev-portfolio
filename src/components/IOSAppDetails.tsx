@@ -7,7 +7,7 @@ import {
   ChevronRight,
   ChevronLeftIcon,
   ChevronRightIcon,
-  LifeBuoy,
+  HelpCircle,
   Mail,
   Github,
   Briefcase,
@@ -99,14 +99,19 @@ const IOSAppDetails = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* App Preview */}
-            <div className="relative lg:justify-self-end">
+            <motion.div 
+              className="relative lg:justify-self-end"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
               <img
                 src={app.imageUrl}
                 alt={app.title}
                 className="w-full h-auto rounded-2xl shadow-2xl border border-zinc-800/50"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent rounded-2xl" />
-            </div>
+            </motion.div>
 
             {/* App Info */}
             <div className="lg:max-w-xl space-y-8">
@@ -162,7 +167,7 @@ const IOSAppDetails = () => {
                   href="mailto:support@anbtech.xyz"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-white font-medium transition-colors"
                 >
-                  <LifeBuoy className="w-4 h-4" />
+                  <HelpCircle className="w-4 h-4" />
                   Support
                 </a>
               </motion.div>
@@ -199,59 +204,96 @@ const IOSAppDetails = () => {
                       className="max-w-full max-h-full w-auto h-auto object-cover rounded-2xl shadow-2xl border border-zinc-800/50"
                     />
                   </motion.div>
+                  
+                  {/* Mobile Navigation Controls */}
+                  <div className="lg:hidden mt-6">
+                    <div className="flex flex-col items-center space-y-4">
+                      <div className="flex justify-center gap-2">
+                        {screenshots.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                              index === currentImageIndex
+                                ? 'bg-blue-500'
+                                : 'bg-zinc-700 hover:bg-zinc-600'
+                            }`}
+                            aria-label={`Go to screenshot ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex gap-4">
+                        <button
+                          onClick={previousImage}
+                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          <ChevronLeftIcon className="w-5 h-5" />
+                          Previous
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          Next
+                          <ChevronRightIcon className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Description */}
-                <div className="space-y-6">
+                <div className="space-y-6 relative min-h-[400px]">
                   <motion.div
                     key={currentImageIndex}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
+                    className="h-full"
                   >
                     <h3 className="text-2xl font-semibold mb-4">
                       {screenshots[currentImageIndex].title}
                     </h3>
-                    <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+                    <p className="text-zinc-400 text-lg leading-relaxed">
                       {screenshots[currentImageIndex].description}
                     </p>
-                    <div className="flex flex-col space-y-6">
-                      <div className="flex gap-4 items-start">
-                        <div className="w-[272px] flex flex-col space-y-4">
-                          <div className="flex justify-center gap-2">
-                            {screenshots.map((_, index) => (
-                              <button
-                                key={index}
-                                onClick={() => setCurrentImageIndex(index)}
-                                className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                                  index === currentImageIndex
-                                    ? 'bg-blue-500'
-                                    : 'bg-zinc-700 hover:bg-zinc-600'
-                                }`}
-                                aria-label={`Go to screenshot ${index + 1}`}
-                              />
-                            ))}
-                          </div>
-                          <div className="flex gap-4">
-                            <button
-                              onClick={previousImage}
-                              className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                            >
-                              <ChevronLeftIcon className="w-5 h-5" />
-                              Previous
-                            </button>
-                            <button
-                              onClick={nextImage}
-                              className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                            >
-                              Next
-                              <ChevronRightIcon className="w-5 h-5" />
-                            </button>
-                          </div>
-                        </div>
+                  </motion.div>
+                  
+                  {/* Desktop Navigation Controls */}
+                  <div className="absolute bottom-0 left-0 right-0 hidden lg:block">
+                    <div className="w-[272px] flex flex-col space-y-4">
+                      <div className="flex justify-center gap-2">
+                        {screenshots.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentImageIndex(index)}
+                            className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                              index === currentImageIndex
+                                ? 'bg-blue-500'
+                                : 'bg-zinc-700 hover:bg-zinc-600'
+                            }`}
+                            aria-label={`Go to screenshot ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex gap-4">
+                        <button
+                          onClick={previousImage}
+                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          <ChevronLeftIcon className="w-5 h-5" />
+                          Previous
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
+                        >
+                          Next
+                          <ChevronRightIcon className="w-5 h-5" />
+                        </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
