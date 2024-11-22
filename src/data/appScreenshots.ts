@@ -43,6 +43,13 @@ export const appScreenshots: AppScreenshots[] = [
           'Get insights into your vehicle service costs and patterns. Track expenses, service frequency, and service trends.',
       },
       {
+        id: 'attachments',
+        image: '/car-care-log/attachments.png',
+        title: 'Attachment Uploading',
+        description:
+          'Upload and manage attachments like photos, and documents for maintenance records, or for vehicle information.',
+      },
+      {
         id: 'dark-light',
         image: '/car-care-log/dark-light.png',
         title: 'Dark & Light Modes',

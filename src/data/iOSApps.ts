@@ -33,9 +33,9 @@ export const iOSApps: IOSApp[] = [
           'View and manage all your vehicles in one place with the ability to add, edit, and delete vehicles as needed.',
       },
       {
-        header: 'Service Record Logging',
+        header: 'Attachment Functionality',
         description:
-          'Record maintenance services with detailed information including date, mileage, cost, and notes. Add custom fields for specific maintenance needs.',
+          'Upload and manage attachments like photos, and documents for maintenance records, or for vehicle information.',
       },
       {
         header: 'Service History Tracking',
