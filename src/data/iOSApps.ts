@@ -53,7 +53,7 @@ export const iOSApps: IOSApp[] = [
           'Enjoy both dark and light modes that automatically adjust to your system preferences or can be set manually for optimal viewing comfort.',
       },
     ],
-    appStoreLink: 'https://apps.apple.com/app/car-care-log/id123456789',
+    appStoreLink: 'https://apps.apple.com/us/app/car-care-log/id6737859842',
     detailedDescription: `
       Car Care Log is a modern iOS application built with Swift and SwiftUI, designed to simplify vehicle maintenance tracking. 
       The app leverages Core Data for efficient local storage and CloudKit for seamless data synchronization across devices.
