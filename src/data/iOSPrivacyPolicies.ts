@@ -6,12 +6,12 @@ interface PrivacyPolicy {
 
 export const iOSPrivacyPolicies: PrivacyPolicy[] = [
   {
-    id: 'car-care-log',
+    id: 'vehicle-service-manager',
     effectiveDate: '2024-11-20',
     content: `
 **Privacy Policy**
 
-This privacy policy applies to the Car Care Log app (hereby referred to as "Application") for mobile devices that was created by Aren Baghramian (hereby referred to as "Service Provider") as a Freemium service. This service is intended for use "AS IS".
+This privacy policy applies to the Vehicle Service Manager app (hereby referred to as "Application") for mobile devices that was created by Aren Baghramian (hereby referred to as "Service Provider") as a Freemium service. This service is intended for use "AS IS".
 
 **What information does the Application obtain and how is it used?**
 

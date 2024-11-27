@@ -15,11 +15,11 @@ export interface IOSApp {
 
 export const iOSApps: IOSApp[] = [
   {
-    id: 'car-care-log',
-    title: 'Car Care Log',
+    id: 'vehicle-service-manager',
+    title: 'Vehicle Service Manager',
     description:
       'A comprehensive iOS application built with SwiftUI and SwiftData, designed to help car owners track maintenance, repairs, and overall vehicle health.',
-    imageUrl: '/car-care-log/preview.png',
+    imageUrl: '/vehicle-service-manager/preview.png',
     technologies: ['Swift', 'SwiftUI', 'SwiftData', 'StoreKit'],
     features: [
       {
@@ -53,9 +53,10 @@ export const iOSApps: IOSApp[] = [
           'Enjoy both dark and light modes that automatically adjust to your system preferences or can be set manually for optimal viewing comfort.',
       },
     ],
-    appStoreLink: 'https://apps.apple.com/us/app/car-care-log/id6737859842',
+    appStoreLink:
+      'https://apps.apple.com/us/app/vehicle-service-manager/id6737859842',
     detailedDescription: `
-      Car Care Log is a modern iOS application built with Swift and SwiftUI, designed to simplify vehicle maintenance tracking. 
+      Vehicle Service Manager is a modern iOS application built with Swift and SwiftUI, designed to simplify vehicle maintenance tracking. 
       The app leverages Core Data for efficient local storage and CloudKit for seamless data synchronization across devices.
 
       Users can easily log and track their vehicle's maintenance history, set up reminders for upcoming services, 
