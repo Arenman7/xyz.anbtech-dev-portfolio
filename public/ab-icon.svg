@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-  <rect width="80" height="80" rx="16" fill="#1a1a2e"/>
-  <text x="40" y="56" font-family="Arial, sans-serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#ffffff">AB</text>
+  <rect width="80" height="80" rx="12" fill="#000000"/>
+  <rect x="4" y="4" width="72" height="72" rx="8" fill="none" stroke="#333333" stroke-width="1"/>
+  <text x="12" y="52" font-family="monospace" font-size="32" font-weight="bold">
+    <tspan fill="#FF3333">x</tspan>
+    <tspan fill="#33FF33">y</tspan>
+    <tspan fill="#3333FF">z</tspan>
+  </text>
 </svg>

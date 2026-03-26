@@ -1,348 +1,283 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { iOSApps } from '../data/iOSApps';
-import {
-  ChevronLeft,
-  ExternalLink,
-  ChevronRight,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  HelpCircle,
-  Mail,
-  Github,
-  Briefcase,
-} from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ExternalLink, ArrowLeft, Mail } from 'lucide-react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { iOSPrivacyPolicies } from '../data/iOSPrivacyPolicies';
-import Contact from './Contact';
 import { getAppScreenshots } from '../data/appScreenshots';
+import Logo from './Logo';
 
-interface Screenshot {
-  image: string;
-  title: string;
-  description: string;
-}
+const AUTO_ADVANCE_MS = 6000;
 
 const IOSAppDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const app = iOSApps.find((app) => app.id === id);
-  const hasPrivacyPolicy = iOSPrivacyPolicies.some(
-    (policy) => policy.id === id
-  );
+  const app = iOSApps.find((a) => a.id === id);
+  const hasPrivacyPolicy = iOSPrivacyPolicies.some((p) => p.id === id);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const screenshots = getAppScreenshots(id || '');
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef<number | null>(null);
+  const startTimeRef = useRef(Date.now());
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleBackToPortfolio = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/');
-    setTimeout(() => {
-      const appsSection = document.getElementById('apps');
-      if (appsSection) {
-        appsSection.scrollIntoView({ behavior: 'smooth' });
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) cancelAnimationFrame(timerRef.current);
+    startTimeRef.current = Date.now();
+    setProgress(0);
+
+    const tick = () => {
+      const elapsed = Date.now() - startTimeRef.current;
+      const pct = Math.min(elapsed / AUTO_ADVANCE_MS, 1);
+      setProgress(pct);
+      if (pct >= 1) {
+        setCurrentImageIndex((i) =>
+          i === screenshots.length - 1 ? 0 : i + 1
+        );
+      } else {
+        timerRef.current = requestAnimationFrame(tick);
       }
-    }, 100);
-  };
+    };
+    timerRef.current = requestAnimationFrame(tick);
+  }, [screenshots.length]);
 
-  const nextImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === screenshots.length - 1 ? 0 : prev + 1
-    );
-  };
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (timerRef.current) cancelAnimationFrame(timerRef.current);
+    };
+  }, [currentImageIndex, resetTimer]);
 
-  const previousImage = () => {
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? screenshots.length - 1 : prev - 1
-    );
-  };
+  const goTo = (index: number) => setCurrentImageIndex(index);
+  const goPrev = () =>
+    setCurrentImageIndex((i) => (i === 0 ? screenshots.length - 1 : i - 1));
+  const goNext = () =>
+    setCurrentImageIndex((i) => (i === screenshots.length - 1 ? 0 : i + 1));
 
   if (!app) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
-        <p className="text-2xl text-white">App not found</p>
+      <div className="min-h-screen flex items-center justify-center bg-black font-mono">
+        <p className="text-zinc-500">app not found</p>
       </div>
     );
   }
 
+  // SVG circular progress indicator
+  const radius = 8;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference * (1 - progress);
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="min-h-screen bg-black text-zinc-300 font-mono">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-zinc-950/80 backdrop-blur-sm w-full">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex justify-between items-center">
-            <a
-              href="/"
-              onClick={handleBackToPortfolio}
-              className="inline-flex items-center text-zinc-400 hover:text-white transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5 mr-2" />
-              Back to Portfolio
-            </a>
+      <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-zinc-800">
+        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/');
+            }}
+          >
+            <Logo />
+          </a>
+          <div className="flex gap-6 text-sm">
             {hasPrivacyPolicy && (
               <Link
                 to={`/ios-apps/${id}/privacy-policy`}
-                className="text-zinc-400 hover:text-white transition-colors"
+                className="text-zinc-500 hover:text-zinc-300 transition-colors"
               >
-                Privacy Policy
+                [privacy]
               </Link>
             )}
+            <a
+              href="mailto:support@anbtech.xyz"
+              className="text-zinc-500 hover:text-zinc-300 transition-colors"
+            >
+              [support]
+            </a>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* App Preview */}
-            <motion.div 
-              className="relative lg:justify-self-end"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <img
-                src={app.imageUrl}
-                alt={app.title}
-                className="w-full h-auto rounded-2xl shadow-2xl border border-zinc-800/50"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent rounded-2xl" />
-            </motion.div>
-
-            {/* App Info */}
-            <div className="lg:max-w-xl space-y-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4">
-                  {app.title}
-                </h1>
-                <p className="text-xl text-zinc-300 leading-relaxed">
-                  {app.description}
-                </p>
-              </motion.div>
-
-              {/* Technologies */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-wrap gap-2"
-              >
+      {/* Hero: banner image + app info side by side */}
+      <section className="bg-zinc-950">
+        <div className="max-w-4xl mx-auto px-6 pt-6 pb-2">
+          <button
+            onClick={() => navigate('/')}
+            className="text-zinc-500 hover:text-zinc-300 transition-colors text-sm flex items-center gap-2 mb-6"
+          >
+            <ArrowLeft size={14} />
+            back
+          </button>
+        </div>
+        <div className="max-w-4xl mx-auto px-6 pb-12">
+          <div className="flex flex-col lg:flex-row gap-8 items-center">
+            <img
+              src={app.imageUrl}
+              alt={app.title}
+              className="w-full lg:w-1/2 h-auto object-cover  shrink-0"
+            />
+            <div className="space-y-5">
+              <h1 className="text-3xl sm:text-4xl font-bold text-white">
+                {app.title}
+              </h1>
+              <p className="text-zinc-400 text-sm sm:text-base max-w-xl leading-relaxed">
+                {app.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
                 {app.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-4 py-2 rounded-full bg-zinc-800/50 backdrop-blur-sm text-sm text-zinc-300 border border-zinc-700/50"
+                    className="text-xs text-zinc-500  px-2 py-0.5"
                   >
-                    {tech}
+                    [{tech}]
                   </span>
                 ))}
-              </motion.div>
-
-              {/* Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="flex gap-4"
-              >
+              </div>
+              <div className="flex gap-3 pt-1">
                 {app.appStoreLink && (
                   <a
                     href={app.appStoreLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-medium transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-zinc-700 text-sm text-zinc-300 hover:text-white hover:border-zinc-500 transition-colors"
                   >
-                    Download on App Store
-                    <ExternalLink className="w-4 h-4" />
+                    App Store
+                    <ExternalLink size={14} />
                   </a>
                 )}
-                <a
-                  href="mailto:support@anbtech.xyz"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-white font-medium transition-colors"
-                >
-                  <HelpCircle className="w-4 h-4" />
-                  Support
-                </a>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Screenshots Carousel */}
-      <section className="py-24 bg-gradient-to-b from-zinc-900/50 to-zinc-950">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-7xl mx-auto"
-          >
-            <h2 className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-              App Experience
-            </h2>
-            <div className="relative">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* Image Display */}
-                <div className="relative">
-                  <motion.div
-                    key={currentImageIndex}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative h-[600px] w-full flex items-center justify-center"
-                  >
-                    <img
-                      src={screenshots[currentImageIndex].image}
-                      alt={screenshots[currentImageIndex].title}
-                      className="max-w-full max-h-full w-auto h-auto object-cover rounded-2xl shadow-2xl border border-zinc-800/50"
-                    />
-                  </motion.div>
-                  
-                  {/* Mobile Navigation Controls */}
-                  <div className="lg:hidden mt-6">
-                    <div className="flex flex-col items-center space-y-4">
-                      <div className="flex justify-center gap-2">
-                        {screenshots.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentImageIndex(index)}
-                            className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                              index === currentImageIndex
-                                ? 'bg-blue-500'
-                                : 'bg-zinc-700 hover:bg-zinc-600'
-                            }`}
-                            aria-label={`Go to screenshot ${index + 1}`}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex gap-4">
-                        <button
-                          onClick={previousImage}
-                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                        >
-                          <ChevronLeftIcon className="w-5 h-5" />
-                          Previous
-                        </button>
-                        <button
-                          onClick={nextImage}
-                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                        >
-                          Next
-                          <ChevronRightIcon className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      {/* Screenshots */}
+      <section className="bg-black py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Current screenshot */}
+            <div className="flex-1 flex items-end justify-center">
+              <img
+                src={screenshots[currentImageIndex]?.image}
+                alt={screenshots[currentImageIndex]?.title}
+                className="max-h-[500px] w-auto object-contain "
+              />
+            </div>
 
-                {/* Description */}
-                <div className="space-y-6 relative min-h-[400px]">
-                  <motion.div
-                    key={currentImageIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full"
+            {/* Info + navigation — bottom aligned */}
+            <div className="lg:w-72 flex flex-col justify-end">
+              <div className="mb-6">
+                <h3 className="text-white font-bold mb-2">
+                  {screenshots[currentImageIndex]?.title}
+                </h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">
+                  {screenshots[currentImageIndex]?.description}
+                </p>
+              </div>
+
+              <div>
+                <div className="flex gap-1 mb-4">
+                  {screenshots.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goTo(index)}
+                      className={`h-1 flex-1 transition-colors ${
+                        index === currentImageIndex
+                          ? 'bg-zinc-400'
+                          : 'bg-zinc-800 hover:bg-zinc-700'
+                      }`}
+                      aria-label={`Screenshot ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <button
+                    onClick={goPrev}
+                    className="text-zinc-500 hover:text-zinc-300 transition-colors"
                   >
-                    <h3 className="text-2xl font-semibold mb-4">
-                      {screenshots[currentImageIndex].title}
-                    </h3>
-                    <p className="text-zinc-400 text-lg leading-relaxed">
-                      {screenshots[currentImageIndex].description}
-                    </p>
-                  </motion.div>
-                  
-                  {/* Desktop Navigation Controls */}
-                  <div className="absolute bottom-0 left-0 right-0 hidden lg:block">
-                    <div className="w-[272px] flex flex-col space-y-4">
-                      <div className="flex justify-center gap-2">
-                        {screenshots.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentImageIndex(index)}
-                            className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                              index === currentImageIndex
-                                ? 'bg-blue-500'
-                                : 'bg-zinc-700 hover:bg-zinc-600'
-                            }`}
-                            aria-label={`Go to screenshot ${index + 1}`}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex gap-4">
-                        <button
-                          onClick={previousImage}
-                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                        >
-                          <ChevronLeftIcon className="w-5 h-5" />
-                          Previous
-                        </button>
-                        <button
-                          onClick={nextImage}
-                          className="w-32 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg backdrop-blur-sm transition-colors flex items-center justify-center gap-2"
-                        >
-                          Next
-                          <ChevronRightIcon className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    &larr; prev
+                  </button>
+                  <span className="text-zinc-700">
+                    {currentImageIndex + 1}/{screenshots.length}
+                  </span>
+                  <button
+                    onClick={goNext}
+                    className="text-zinc-500 hover:text-zinc-300 transition-colors"
+                  >
+                    next &rarr;
+                  </button>
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 22 22"
+                    className="ml-1 -rotate-90"
+                  >
+                    <circle
+                      cx="11"
+                      cy="11"
+                      r={radius}
+                      fill="none"
+                      stroke="#27272a"
+                      strokeWidth="2"
+                    />
+                    <circle
+                      cx="11"
+                      cy="11"
+                      r={radius}
+                      fill="none"
+                      stroke="#a1a1aa"
+                      strokeWidth="2"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDashoffset}
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </div>
               </div>
+
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-6xl mx-auto"
+      {/* Features */}
+      <section className="bg-zinc-950 py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-sm text-zinc-500 mb-8">
+&gt; features
+          </h2>
+
+          <div className="space-y-1">
+            {app.features.map((feature, index) => (
+              <div
+                key={index}
+                className="border-l-2 border-zinc-800 pl-4 py-3"
+              >
+                <h3 className="text-white text-sm font-bold">{feature.header}</h3>
+                <p className="text-zinc-500 text-sm mt-1">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-800 bg-black py-8 px-6">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-600">
+          <Logo className="text-sm" />
+          <a
+            href="mailto:support@anbtech.xyz"
+            className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors"
           >
-            <h2 className="text-4xl font-bold mb-16 text-center bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-              Key Features
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {app.features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="p-6 rounded-2xl bg-zinc-900/50 backdrop-blur-sm border border-zinc-800/50 hover:border-zinc-700/50 transition-colors group"
-                >
-                  <div className="flex gap-4 items-start">
-                    <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/20 transition-colors">
-                      <div className="w-3 h-3 rounded-full bg-blue-500" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">
-                        {feature.header}
-                      </h3>
-                      <p className="text-zinc-300 leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+            <Mail size={14} />
+            support@anbtech.xyz
+          </a>
         </div>
-      </section>
-
-      {/* Contact Section */}
-      <Contact />
+      </footer>
     </div>
   );
 };
